@@ -261,7 +261,7 @@ public class TensorFlowTextToText extends RESTService implements BotContentGener
 					Files.write(path2, j.toJSONString().getBytes(charset),
 							new OpenOption[] { StandardOpenOption.WRITE });
 
-					ProcessBuilder builder = new ProcessBuilder("python3", "train.py", "-out_dir=" + out_dir,
+					ProcessBuilder builder = new ProcessBuilder("python", "train.py", "-out_dir=" + out_dir,
 							"-learning_rate=" + learning_rate, "-num_train_steps=" + num_training_steps);
 					builder.directory(new File(pythonScriptPath).getAbsoluteFile()); // this is where you set the root
 																						// folder
@@ -335,7 +335,7 @@ public class TensorFlowTextToText extends RESTService implements BotContentGener
 	public Object inference(String input) {
 		StringBuilder text = new StringBuilder();
 		try {
-			ProcessBuilder builder = new ProcessBuilder("python3", "inference.py", input);
+			ProcessBuilder builder = new ProcessBuilder("python", "inference.py", input);
 			builder.directory(new File(pythonScriptPath).getAbsoluteFile()); // this is where you set the root folder
 																				// for the executable to run with
 			builder.redirectErrorStream(true);
@@ -362,7 +362,7 @@ public class TensorFlowTextToText extends RESTService implements BotContentGener
 	public Object inference(String model, String input) {
 		StringBuilder text = new StringBuilder();
 		try {
-			ProcessBuilder builder = new ProcessBuilder("python3", "inference.py", input, model);
+			ProcessBuilder builder = new ProcessBuilder("python", "inference.py", input, model);
 			builder.directory(new File(pythonScriptPath).getAbsoluteFile()); // this is where you set the root folder
 																				// for the executable to run with
 			builder.redirectErrorStream(true);
