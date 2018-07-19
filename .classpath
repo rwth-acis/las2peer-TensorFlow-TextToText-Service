@@ -8,7 +8,7 @@
 	<classpathentry kind="lib" path="lib/libtensorflow_jni-1.6.0.jar"/>
 	<classpathentry kind="lib" path="lib/libtensorflow-1.6.0.jar"/>
 	<classpathentry kind="lib" path="lib/tensorflow-1.6.0.jar"/>
-	<classpathentry kind="lib" path="lib/las2peer-bundle-0.7-SBF.jar"/>
 	<classpathentry kind="lib" path="lib/gson-2.8.2.jar"/>
+	<classpathentry kind="lib" path="lib/las2peer-bundle-0.7.6.jar"/>
 	<classpathentry kind="output" path="output"/>
 </classpath>

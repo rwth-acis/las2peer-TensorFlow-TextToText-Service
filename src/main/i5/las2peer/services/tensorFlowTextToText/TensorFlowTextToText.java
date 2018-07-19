@@ -84,7 +84,7 @@ public class TensorFlowTextToText extends RESTService implements BotContentGener
 	}
 
 	@Override
-	public boolean trainStep(String input, String output) {
+	public boolean trainStep(String out_dir, String input, String output) {
 		try {
 			ProcessBuilder builder = new ProcessBuilder("python", pythonScriptPath + "\\train.py", input, output);
 			builder.directory(new File(pythonScriptPath).getAbsoluteFile()); // this is where you set the root folder
@@ -142,7 +142,7 @@ public class TensorFlowTextToText extends RESTService implements BotContentGener
 				double learning_rate = (double) params.get("learning_rate");
 				int num_training_steps = (int) params.get("num_train_steps");
 				// int epoch_step = num_training_steps * ((int) params.get("epoch_step"));
-				text = train(out_dir, learning_rate, num_training_steps);
+				text = train(out_dir, "", learning_rate, num_training_steps, 1);
 
 			} else if (botStatus.get(out_dir) == BotStatus.TRAINING) {
 				return Response.status(Response.Status.CONFLICT).entity("Currently training").build();
@@ -230,7 +230,7 @@ public class TensorFlowTextToText extends RESTService implements BotContentGener
 	}
 
 	@Override
-	public boolean train(String out_dir, double learning_rate, int num_training_steps) {
+	public boolean train(String out_dir, String data, double learning_rate, int num_training_steps, int epochs) {
 
 		StringBuilder text = new StringBuilder();
 		Thread t = new Thread() {
@@ -331,8 +331,8 @@ public class TensorFlowTextToText extends RESTService implements BotContentGener
 
 	}
 
-	@Override
 	public Object inference(String input) {
+		System.out.println(input);
 		StringBuilder text = new StringBuilder();
 		try {
 			ProcessBuilder builder = new ProcessBuilder("python3", "inference.py", input);
@@ -354,11 +354,13 @@ public class TensorFlowTextToText extends RESTService implements BotContentGener
 			return false;
 		} catch (Exception e) {
 			System.out.printf("Error");
+			e.printStackTrace();
 			return false;
 		}
 		return text.toString();
 	}
 
+	@Override
 	public Object inference(String model, String input) {
 		StringBuilder text = new StringBuilder();
 		try {
