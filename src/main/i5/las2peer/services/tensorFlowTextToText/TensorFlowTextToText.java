@@ -364,6 +364,8 @@ public class TensorFlowTextToText extends RESTService implements BotContentGener
 	public Object inference(String model, String input) {
 		StringBuilder text = new StringBuilder();
 		try {
+			if (model.length() < 3)
+				model = "base";
 			ProcessBuilder builder = new ProcessBuilder("python3", "inference.py", input, model);
 			builder.directory(new File(pythonScriptPath).getAbsoluteFile()); // this is where you set the root folder
 																				// for the executable to run with
@@ -383,6 +385,7 @@ public class TensorFlowTextToText extends RESTService implements BotContentGener
 			return false;
 		} catch (Exception e) {
 			System.out.printf("Error");
+			e.printStackTrace();
 			return false;
 		}
 		return text.toString();
